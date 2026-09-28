@@ -1,0 +1,19 @@
+<resources>
+
+    <string name="app_name">RAI Oreo</string>
+
+    <string name="my_project">My Project</string>
+
+    <string name="oreo">Oreo</string>
+
+    <string name="judul_gizi">Komposisi Gizi</string>
+
+    <string name="energi">Energi: 110 kcal</string>
+
+    <string name="lemak">Lemak: 5 g</string>
+
+    <string name="karbohidrat">Karbohidrat: 17 g</string>
+
+    <string name="protein">Protein: 1 g</string>
+
+</resources>

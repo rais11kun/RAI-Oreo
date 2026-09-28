@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cream"
+    tools:context=".SnackActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_project"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/oreo_dark"
+            android:layout_marginBottom="20dp"/>
+
+        <ImageView
+            android:id="@+id/imgSnack"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:src="@drawable/oreo"
+            android:contentDescription="@string/oreo"
+            android:scaleType="fitCenter"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/oreo"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="@color/oreo_dark"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/judul_gizi"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:textColor="@color/oreo_brown"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/energi"
+            android:textSize="17sp"
+            android:padding="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lemak"
+            android:textSize="17sp"
+            android:padding="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/karbohidrat"
+            android:textSize="17sp"
+            android:padding="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/protein"
+            android:textSize="17sp"
+            android:padding="8dp"/>
+
+    </LinearLayout>
+
+</ScrollView>
