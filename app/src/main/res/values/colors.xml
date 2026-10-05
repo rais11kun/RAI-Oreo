@@ -1,7 +1,18 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="oreo_dark">#3E2723</color>
-    <color name="oreo_brown">#5D4037</color>
-    <color name="cream">#FFF8F0</color>
+    <color name="primary_navy">#1B4F72</color>
+    <color name="primary_blue">#2E86C1</color>
+    <color name="accent_orange">#F39C12</color>
+    <color name="success_green">#27AE60</color>
+    <color name="warning_orange">#F39C12</color>
+    <color name="error_red">#E74C3C</color>
+    <color name="background">#F5F7FA</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="text_primary">#17202A</color>
+    <color name="text_secondary">#566573</color>
+    <color name="border">#D5DBDB</color>
+    <color name="cream">#F5F7FA</color>
+    <color name="oreo_dark">#1B4F72</color>
+    <color name="oreo_brown">#2E86C1</color>
 </resources>

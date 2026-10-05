@@ -15,11 +15,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Halaman Awal tidak menggunakan Toolbar sesuai instruksi tugas.
         binding.btnMyProject.setOnClickListener {
+            startActivity(Intent(this, SnackActivity::class.java))
+        }
 
-            val intent = Intent(this, SnackActivity::class.java)
-            startActivity(intent)
-
+        binding.btnOpenWeb.setOnClickListener {
+            startActivity(Intent(this, WebActivity::class.java))
         }
     }
 }

@@ -1,19 +1,23 @@
 <resources>
-
-    <string name="app_name">RAI Oreo</string>
-
-    <string name="my_project">My Project</string>
-
-    <string name="oreo">Oreo</string>
-
-    <string name="judul_gizi">Komposisi Gizi</string>
-
-    <string name="energi">Energi: 110 kcal</string>
-
-    <string name="lemak">Lemak: 5 g</string>
-
-    <string name="karbohidrat">Karbohidrat: 17 g</string>
-
-    <string name="protein">Protein: 1 g</string>
-
+    <string name="app_name">SIMPER-NRA Mobile</string>
+    <string name="app_tagline">Cetak Lebih Mudah, Pantau Lebih Cepat</string>
+    <string name="project_title">SIMPER-NRA Mobile</string>
+    <string name="project_subtitle">Sistem layanan percetakan New Reklame Advertising</string>
+    <string name="open_catalog">Lihat Katalog Layanan</string>
+    <string name="open_web">Buka Info Percetakan</string>
+    <string name="catalog_title">Katalog Layanan</string>
+    <string name="web_title">Info Percetakan</string>
+    <string name="web_url_label">Informasi percetakan dan layanan terkait</string>
+    <string name="banner">Banner</string>
+    <string name="spanduk">Spanduk</string>
+    <string name="stiker">Stiker</string>
+    <string name="banner_price">Mulai Rp20.000 / m²</string>
+    <string name="spanduk_price">Mulai Rp15.000 / m²</string>
+    <string name="stiker_price">Mulai Rp5.000</string>
+    <string name="oreo">SIMPER-NRA</string>
+    <string name="judul_gizi">Layanan Percetakan</string>
+    <string name="energi">Banner • Media promosi indoor dan outdoor</string>
+    <string name="lemak">Spanduk • Cetak promosi dengan berbagai ukuran</string>
+    <string name="karbohidrat">Stiker • Cetak stiker untuk kebutuhan promosi</string>
+    <string name="protein">New Reklame Advertising • Pekanbaru</string>
 </resources>
