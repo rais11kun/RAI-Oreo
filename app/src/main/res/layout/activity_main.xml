@@ -73,6 +73,31 @@
             android:backgroundTint="@color/white"
             android:fontFamily="sans-serif" />
 
+
+
+        <Button
+            android:id="@+id/btnDeveloperProfile"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="12dp"
+            android:text="Profil Pengembang"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_navy"
+            android:backgroundTint="@color/white"
+            android:fontFamily="sans-serif" />
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="12dp"
+            android:text="Keluar"
+            android:textSize="14sp"
+            android:textColor="@color/error_red"
+            android:backgroundTint="@color/white"
+            android:fontFamily="sans-serif" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
