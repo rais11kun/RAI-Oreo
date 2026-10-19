@@ -20,12 +20,6 @@ class LoginActivity : AppCompatActivity() {
             val username = binding.etUsername.text.toString().trim()
             val password = binding.etPassword.text.toString()
 
-            /*
-             * Validasi mengikuti modul Pertemuan 6:
-             * username harus sama dengan password dan keduanya tidak boleh kosong.
-             * Contoh kredensial valid: username "rais", password "rais".
-             * Ini validasi lokal untuk praktikum, bukan autentikasi server produksi.
-             */
             if (username.isNotEmpty() && password.isNotEmpty() && username == password) {
                 // SharedPreferences ditulis hanya setelah validasi berhasil.
                 val sharedPref = getSharedPreferences("simper_pref", MODE_PRIVATE)

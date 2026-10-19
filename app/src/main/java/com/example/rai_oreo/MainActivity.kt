@@ -1,51 +1,56 @@
 package com.example.rai_oreo
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.rai_oreo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Halaman Awal tidak menggunakan Toolbar sesuai instruksi tugas.
-        binding.btnMyProject.setOnClickListener {
-            startActivity(Intent(this, SnackActivity::class.java))
+        // Fragment Beranda ditampilkan saat MainActivity pertama kali dibuka.
+        if (savedInstanceState == null) {
+            replaceFragment(HomeFragment())
+            binding.bottomNavView.selectedItemId = R.id.nav_beranda
         }
 
-        binding.btnOpenWeb.setOnClickListener {
-            startActivity(Intent(this, WebActivity::class.java))
-        }
-
-        binding.btnDeveloperProfile.setOnClickListener {
-            startActivity(Intent(this, DeveloperProfileActivity::class.java))
-        }
-
-        // Fitur logout mengikuti modul: minta konfirmasi, lalu hapus status login.
-        binding.btnLogout.setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle("Konfirmasi Logout")
-                .setMessage("Apakah Anda yakin ingin keluar?")
-                .setNegativeButton("Tidak", null)
-                .setPositiveButton("Ya") { dialog, _ ->
-                    getSharedPreferences("simper_pref", MODE_PRIVATE)
-                        .edit()
-                        .clear()
-                        .apply()
-
-                    dialog.dismiss()
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
+        binding.bottomNavView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_beranda -> {
+                    replaceFragment(HomeFragment())
+                    true
                 }
-                .show()
+                R.id.nav_layanan -> {
+                    replaceFragment(LayananFragment())
+                    true
+                }
+                R.id.nav_pesan -> {
+                    replaceFragment(PesanFragment())
+                    true
+                }
+                R.id.nav_riwayat -> {
+                    replaceFragment(RiwayatFragment())
+                    true
+                }
+                R.id.nav_profil -> {
+                    replaceFragment(ProfilFragment())
+                    true
+                }
+                else -> false
+            }
         }
+    }
+
+    // Pola mengikuti modul: mengganti isi FrameLayout dengan Fragment terpilih.
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(binding.fragmentContainer.id, fragment)
+            // Sesuai modul Pertemuan 7, back stack Bottom Navigation tidak ditambahkan.
+            .commit()
     }
 }

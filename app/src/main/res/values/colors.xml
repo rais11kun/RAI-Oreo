@@ -15,4 +15,5 @@
     <color name="cream">#F5F7FA</color>
     <color name="oreo_dark">#1B4F72</color>
     <color name="oreo_brown">#2E86C1</color>
+    <color name="nav_inactive">#7F8C8D</color>
 </resources>

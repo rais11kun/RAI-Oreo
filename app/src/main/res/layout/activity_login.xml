@@ -15,7 +15,8 @@
             android:layout_width="104dp"
             android:layout_height="104dp"
             android:layout_marginTop="30dp"
-            android:src="@drawable/simper_logo"
+            android:src="@drawable/logo_simper"
+            android:scaleType="fitCenter"
             android:contentDescription="Logo SIMPER-NRA" />
 
         <TextView

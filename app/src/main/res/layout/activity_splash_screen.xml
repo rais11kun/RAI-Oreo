@@ -10,7 +10,8 @@
     <ImageView
         android:layout_width="148dp"
         android:layout_height="148dp"
-        android:src="@drawable/simper_logo"
+        android:src="@drawable/logo_simper"
+        android:scaleType="fitCenter"
         android:contentDescription="Logo SIMPER-NRA"
         android:background="@color/white"
         android:padding="12dp" />
