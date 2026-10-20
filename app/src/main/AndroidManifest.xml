@@ -27,6 +27,14 @@
             android:exported="false" />
 
         <activity
+            android:name=".OtpVerificationActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".RegistrationActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
 
