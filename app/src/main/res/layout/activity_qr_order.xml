@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:gravity="center" android:padding="24dp"
+    android:background="@color/background">
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="QR Pesanan" android:textColor="@color/primary_navy"
+        android:textSize="24sp" android:textStyle="bold"/>
+    <TextView android:id="@+id/tvOrderNumber" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:gravity="center"
+        android:layout_marginTop="12dp" android:textColor="@color/text_primary" android:textSize="16sp"/>
+    <ImageView android:id="@+id/ivOrderQr" android:layout_width="280dp"
+        android:layout_height="280dp" android:layout_marginTop="20dp"
+        android:contentDescription="QR code nomor pesanan" android:scaleType="fitCenter"/>
+    <TextView android:id="@+id/tvQrError" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:gravity="center" android:textColor="@color/error_red"/>
+</LinearLayout>

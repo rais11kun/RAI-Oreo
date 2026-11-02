@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical" android:padding="24dp" android:background="@color/background">
- <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Riwayat Pesanan" android:textColor="@color/primary_navy" android:textSize="24sp" android:textStyle="bold" />
- <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:gravity="center" android:text="Riwayat pesanan pelanggan akan ditampilkan di halaman ini." android:textColor="@color/text_secondary" android:textSize="15sp" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:gravity="center" android:orientation="vertical" android:padding="24dp"
+    android:background="@color/background">
+ <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+     android:text="Riwayat Pesanan" android:textColor="@color/primary_navy" android:textSize="24sp" android:textStyle="bold"/>
+ <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+     android:layout_marginTop="10dp" android:gravity="center"
+     android:text="Pindai QR pada nota untuk melihat status pesanan." android:textColor="@color/text_secondary" android:textSize="15sp"/>
+ <Button android:id="@+id/btnScanOrderQr" android:layout_width="match_parent"
+     android:layout_height="56dp" android:layout_marginTop="20dp"
+     android:backgroundTint="@color/primary_navy" android:text="Scan QR"
+     android:textColor="@color/white"/>
 </LinearLayout>
