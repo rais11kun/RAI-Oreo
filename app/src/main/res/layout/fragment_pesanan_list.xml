@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Isi satu halaman ViewPager2 pada tab Pesanan: daftar pesanan + keadaan kosong. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    tools:ignore="HardcodedText">
+
+    <ListView
+        android:id="@+id/lvPesanan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:divider="@null"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="20dp"
+        android:scrollbars="none" />
+
+    <LinearLayout
+        android:id="@+id/emptyPesanan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:background="@drawable/bg_circle_soft"
+            android:contentDescription="Kosong"
+            android:padding="24dp"
+            android:src="@drawable/ic_receipt"
+            app:tint="@color/muted" />
+
+        <TextView
+            android:id="@+id/tvEmptyJudul"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Belum ada pesanan"
+            android:textAppearance="@style/TextApp.H3" />
+
+        <TextView
+            android:id="@+id/tvEmptyIsi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="Pesanan yang Anda buat akan muncul di sini."
+            android:textAppearance="@style/TextApp.Muted" />
+    </LinearLayout>
+
+</FrameLayout>

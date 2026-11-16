@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Satu halaman onboarding: ilustrasi PNG, judul, dan penjelasan singkat. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingStart="32dp"
+    android:paddingEnd="32dp"
+    tools:ignore="HardcodedText">
+
+    <ImageView
+        android:id="@+id/ivIlustrasi"
+        android:layout_width="272dp"
+        android:layout_height="272dp"
+        android:contentDescription="Ilustrasi"
+        android:scaleType="fitCenter"
+        android:src="@drawable/onboarding_1" />
+
+    <TextView
+        android:id="@+id/tvJudul"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="Pesan layanan cetak"
+        android:textColor="@color/navy800"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/tvDeskripsi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:text="Pilih layanan dari katalog, atur ukuran dan jumlah, lalu kirim pesanan tanpa antre."
+        android:textColor="@color/muted"
+        android:textSize="13sp" />
+
+</LinearLayout>

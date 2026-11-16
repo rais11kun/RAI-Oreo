@@ -1,24 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SIMPER-NRA Mobile</string>
-    <string name="app_tagline">Cetak Lebih Mudah, Pantau Lebih Cepat</string>
-    <string name="project_title">SIMPER-NRA Mobile</string>
-    <string name="project_subtitle">Sistem layanan percetakan New Reklame Advertising</string>
-    <string name="open_catalog">Lihat Katalog Layanan</string>
-    <string name="open_web">Buka Info Percetakan</string>
-    <string name="catalog_title">Katalog Layanan</string>
-    <string name="web_title">Info Percetakan</string>
-    <string name="profile_title">Profil Pengembang</string>
-    <string name="web_url_label">Informasi percetakan dan layanan terkait</string>
-    <string name="banner">Banner</string>
-    <string name="spanduk">Spanduk</string>
-    <string name="stiker">Stiker</string>
-    <string name="banner_price">Mulai Rp20.000 / m²</string>
-    <string name="spanduk_price">Mulai Rp15.000 / m²</string>
-    <string name="stiker_price">Mulai Rp5.000</string>
-    <string name="oreo">SIMPER-NRA</string>
-    <string name="judul_gizi">Layanan Percetakan</string>
-    <string name="energi">Banner • Media promosi indoor dan outdoor</string>
-    <string name="lemak">Spanduk • Cetak promosi dengan berbagai ukuran</string>
-    <string name="karbohidrat">Stiker • Cetak stiker untuk kebutuhan promosi</string>
-    <string name="protein">New Reklame Advertising • Pekanbaru</string>
+
+    <!-- Menu (Modul 5) -->
+    <string name="menu_cari">Cari</string>
+    <string name="menu_bagikan">Bagikan</string>
+    <string name="menu_tentang">Tentang aplikasi</string>
+    <string name="menu_keluar">Keluar</string>
+
+    <!-- Fragment (Modul 7) -->
+    <string name="frag_beranda">Beranda</string>
+    <string name="frag_favorit">Favorit</string>
+    <string name="frag_profil">Profil</string>
+
+    <!-- Modul praktikum -->
+    <string name="modul_hub_title">Modul Praktikum</string>
+    <string name="modul_hub_subtitle">Penerapan Modul 2–10 (Activity, ViewBinding, Intent, Fragment, ListView)</string>
+    <string name="modul_demo_label">Demo</string>
+    <string name="modul_terkunci">Menunggu materi</string>
+
+    <!-- Onboard screen (Modul 11) -->
+    <string name="onboarding_1_judul">Pesan layanan cetak</string>
+    <string name="onboarding_1_isi">Pilih layanan dari katalog, atur ukuran dan jumlah, lalu kirim pesanan tanpa perlu datang ke toko.</string>
+    <string name="onboarding_2_judul">Pantau produksi</string>
+    <string name="onboarding_2_isi">Status pesanan bergerak dari desain, produksi, sampai selesai — lengkap dengan riwayat waktunya.</string>
+    <string name="onboarding_3_judul">Ambil atau terima pesanan</string>
+    <string name="onboarding_3_isi">Tunjukkan kartu QR pesanan saat mengambil di toko, atau minta pesanan dikirim ke alamat Anda.</string>
+
+    <!-- Komponen (Modul 2 & 3) -->
+    <string name="label_nama">Nama lengkap</string>
+    <string name="label_layout">Layout ini memakai ConstraintLayout dengan guideline, chain, barrier, dan circular constraint.</string>
+    <string name="salam_hallo">Halo, %1$s! Selamat datang di SIMPER-NRA.</string>
+    <string name="komponen_judul">Activity &amp; Components</string>
 </resources>

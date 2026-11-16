@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="urutan_katalog">
+        <item>Terpopuler</item>
+        <item>Harga termurah</item>
+        <item>Harga termahal</item>
+        <item>Nama A - Z</item>
+    </string-array>
+
+    <string-array name="periode_laporan">
+        <item>Bulan ini</item>
+        <item>3 bulan terakhir</item>
+        <item>Tahun ini</item>
+        <item>Semua waktu</item>
+    </string-array>
+
+    <string-array name="kategori_layanan">
+        <item>Banner</item>
+        <item>Spanduk</item>
+        <item>Stiker</item>
+        <item>ID Card</item>
+        <item>Lainnya</item>
+    </string-array>
+
+    <string-array name="status_pesanan">
+        <item>Pesanan Baru</item>
+        <item>Design</item>
+        <item>Diproses</item>
+        <item>Produksi</item>
+        <item>Selesai</item>
+        <item>Dibatalkan</item>
+    </string-array>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Latar gradien bagian atas layar login (navy -> primary -> biru terang). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="270"
+        android:centerColor="@color/primary"
+        android:endColor="@color/login_end"
+        android:startColor="@color/navy800"
+        android:type="linear" />
+</shape>

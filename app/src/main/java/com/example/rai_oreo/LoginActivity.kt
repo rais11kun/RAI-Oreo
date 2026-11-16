@@ -1,260 +1,152 @@
-
+/**
+ * Penerapan praktikum: Modul 2 (komponen input & event listener), Modul 3 (Intent),
+ * Modul 6 (SharedPreferences sesi), Modul 11 (tampilan sheet + gradien mengikuti desain Compose).
+ */
 package com.example.rai_oreo
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
+import android.text.InputType
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.biometric.BiometricManager
-import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
-import com.example.rai_oreo.databinding.ActivityLoginBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.example.rai_oreo.data.Prefs
+import com.example.rai_oreo.data.SimperRepository
+import com.example.rai_oreo.databinding.ActivityLoginBinding
+import com.example.rai_oreo.util.Biometric
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private var sandiTerlihat = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Login menggunakan username dan password
-        binding.btnLogin.setOnClickListener {
+        binding.etEmail.setText(Prefs.email(this))
+        binding.cbIngat.isChecked = Prefs.ingat(this)
 
-            val username = binding.etUsername.text.toString().trim()
-            val password = binding.etPassword.text.toString()
-
-            val prefs = getSharedPreferences(
-                "simper_pref",
-                MODE_PRIVATE
-            )
-
-            val savedUsername = prefs.getString("username", null)
-            val savedPassword = prefs.getString("password", null)
-
-            // Login praktikum: username = password
-            val practicumMatch =
-                username.isNotEmpty() &&
-                        password.isNotEmpty() &&
-                        username == password
-
-            // Login menggunakan akun hasil registrasi
-            val registeredMatch =
-                username.isNotEmpty() &&
-                        password.isNotEmpty() &&
-                        username == savedUsername &&
-                        password == savedPassword
-
-            if (practicumMatch || registeredMatch) {
-
-                // Simpan status login dan username
-                prefs.edit()
-                    .putBoolean("isLogin", true)
-                    .putString("username", username)
-                    .apply()
-
-                Toast.makeText(
-                    this,
-                    "Login berhasil",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                openMainActivity()
-
-            } else {
-
-                MaterialAlertDialogBuilder(this)
-                    .setTitle("Login gagal")
-                    .setMessage("Periksa username dan password.")
-                    .setPositiveButton("OK", null)
-                    .show()
-            }
+        binding.btnMasuk.setOnClickListener { masuk() }
+        binding.ivTogglePassword.setOnClickListener { alihkanSandi() }
+        binding.btnSidikJari.setOnClickListener { sidikJari() }
+        binding.btnGoogle.setOnClickListener {
+            tampilkanCatatan("Masuk dengan Google memerlukan konfigurasi OAuth. Gunakan email demo untuk sekarang.")
+        }
+        binding.tvDaftar.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+        binding.tvLupa.setOnClickListener {
+            startActivity(Intent(this, LupaPasswordActivity::class.java))
         }
 
-        // Login menggunakan biometrik
-        binding.btnBiometricLogin.setOnClickListener {
-            startBiometricLogin()
-        }
+        siapkanSidikJari()
+    }
 
-        // Navigasi menuju halaman registrasi
-        binding.tvRegister.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    RegistrationActivity::class.java
-                )
-            )
+    /** Menampilkan/menyembunyikan isi password (ikon mata). */
+    private fun alihkanSandi() {
+        sandiTerlihat = !sandiTerlihat
+        val posisi = binding.etPassword.selectionEnd
+        binding.etPassword.inputType = if (sandiTerlihat) {
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+        } else {
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        }
+        binding.etPassword.setSelection(posisi.coerceAtLeast(0))
+        binding.ivTogglePassword.setImageResource(
+            if (sandiTerlihat) R.drawable.ic_eye_off else R.drawable.ic_eye
+        )
+        binding.ivTogglePassword.contentDescription =
+            if (sandiTerlihat) "Sembunyikan password" else "Tampilkan password"
+    }
+
+    /** Menyesuaikan tombol sidik jari dengan ketersediaan sensor pada perangkat. */
+    private fun siapkanSidikJari() {
+        val tersedia = Biometric.tersedia(this)
+        binding.btnSidikJari.setBackgroundResource(
+            if (tersedia) R.drawable.bg_btn_fingerprint else R.drawable.bg_btn_fingerprint_off
+        )
+        binding.ivSidik.imageTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(this, if (tersedia) R.color.blue else R.color.muted)
+        )
+        binding.tvSidik.setTextColor(
+            ContextCompat.getColor(this, if (tersedia) R.color.primary_dark else R.color.muted)
+        )
+        binding.tvBioNote.text = if (tersedia) {
+            "Tempelkan sidik jari pada sensor untuk masuk lebih cepat"
+        } else {
+            "Fingerprint belum tersedia di perangkat ini"
         }
     }
 
-    // Memeriksa ketersediaan biometrik
-    private fun startBiometricLogin() {
+    private fun masuk() {
+        val email = binding.etEmail.text?.toString().orEmpty().trim()
+        val password = binding.etPassword.text?.toString().orEmpty()
 
-        val prefs = getSharedPreferences(
-            "simper_pref",
-            MODE_PRIVATE
-        )
+        tampilkanCatatan(null)
+        binding.tvEmailError.visibility = View.GONE
+        binding.tvPasswordError.visibility = View.GONE
+        binding.boxEmail.setBackgroundResource(R.drawable.bg_input)
+        binding.boxPassword.setBackgroundResource(R.drawable.bg_input)
 
-        // Username harus sudah pernah disimpan
-        val savedUsername = prefs.getString("username", null)
-
-        if (savedUsername.isNullOrBlank()) {
-
-            MaterialAlertDialogBuilder(this)
-                .setTitle("Login biometrik belum tersedia")
-                .setMessage(
-                    "Silakan login menggunakan username dan password " +
-                            "terlebih dahulu."
-                )
-                .setPositiveButton("Mengerti", null)
-                .show()
-
+        if (email.isEmpty()) {
+            binding.tvEmailError.text = "Email wajib diisi"
+            binding.tvEmailError.visibility = View.VISIBLE
+            binding.boxEmail.setBackgroundResource(R.drawable.bg_input_error)
+            return
+        }
+        if (password.length < 4) {
+            binding.tvPasswordError.text = "Password minimal 4 karakter"
+            binding.tvPasswordError.visibility = View.VISIBLE
+            binding.boxPassword.setBackgroundResource(R.drawable.bg_input_error)
             return
         }
 
-        val manager = BiometricManager.from(this)
-
-        val authenticators =
-            BiometricManager.Authenticators.BIOMETRIC_STRONG or
-                    BiometricManager.Authenticators.BIOMETRIC_WEAK
-
-        when (manager.canAuthenticate(authenticators)) {
-
-            BiometricManager.BIOMETRIC_SUCCESS -> {
-                showBiometricPrompt(authenticators)
+        SimperRepository.login(email, password)
+            .onSuccess { user ->
+                Prefs.simpanSesi(this, user.email, user.nama, binding.cbIngat.isChecked)
+                bukaBeranda()
             }
-
-            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                showBiometricMessage(
-                    "Perangkat ini tidak memiliki sensor biometrik."
-                )
+            .onFailure { error ->
+                binding.tvPasswordError.text = error.message ?: "Email atau password salah"
+                binding.tvPasswordError.visibility = View.VISIBLE
+                binding.boxPassword.setBackgroundResource(R.drawable.bg_input_error)
             }
+    }
 
-            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                showBiometricMessage(
-                    "Sensor biometrik sedang tidak tersedia."
-                )
-            }
-
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                showBiometricMessage(
-                    "Belum ada sidik jari atau wajah yang didaftarkan. " +
-                            "Silakan daftarkan biometrik melalui pengaturan perangkat."
-                )
-            }
-
-            else -> {
-                showBiometricMessage(
-                    "Biometrik tidak tersedia. " +
-                            "Gunakan username dan password."
-                )
-            }
+    private fun sidikJari() {
+        if (!Biometric.tersedia(this)) {
+            MaterialAlertDialogBuilder(this)
+                .setTitle("Sidik jari belum tersedia")
+                .setMessage("Perangkat ini belum memiliki sensor sidik jari yang aktif. Silakan masuk dengan email dan password.")
+                .setPositiveButton("Mengerti", null)
+                .show()
+            return
         }
+        Biometric.minta(
+            activity = this,
+            onSukses = {
+                SimperRepository.loginWithBiometric()
+                Prefs.simpanSesi(this, Prefs.email(this), Prefs.nama(this), true)
+                bukaBeranda()
+            },
+            onGagal = { pesan ->
+                Toast.makeText(this, pesan, Toast.LENGTH_SHORT).show()
+            },
+        )
     }
 
-    // Menampilkan dialog autentikasi biometrik
-    private fun showBiometricPrompt(authenticators: Int) {
-
-        val executor = ContextCompat.getMainExecutor(this)
-
-        val prompt = BiometricPrompt(
-            this,
-            executor,
-            object : BiometricPrompt.AuthenticationCallback() {
-
-                // Autentikasi berhasil
-                override fun onAuthenticationSucceeded(
-                    result: BiometricPrompt.AuthenticationResult
-                ) {
-                    super.onAuthenticationSucceeded(result)
-
-                    val prefs = getSharedPreferences(
-                        "simper_pref",
-                        MODE_PRIVATE
-                    )
-
-                    prefs.edit()
-                        .putBoolean("isLogin", true)
-                        .apply()
-
-                    Toast.makeText(
-                        this@LoginActivity,
-                        "Autentikasi berhasil",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    openMainActivity()
-                }
-
-                // Sidik jari tidak cocok
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-
-                    Toast.makeText(
-                        this@LoginActivity,
-                        "Biometrik tidak cocok. Coba lagi.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                // Autentikasi dibatalkan atau terjadi error
-                override fun onAuthenticationError(
-                    errorCode: Int,
-                    errString: CharSequence
-                ) {
-                    super.onAuthenticationError(
-                        errorCode,
-                        errString
-                    )
-
-                    Toast.makeText(
-                        this@LoginActivity,
-                        errString,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        )
-
-        val info = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Login SIMPER-NRA")
-            .setSubtitle(
-                "Konfirmasi identitas menggunakan sidik jari atau wajah"
-            )
-            .setAllowedAuthenticators(authenticators)
-            .setNegativeButtonText("Gunakan password")
-            .build()
-
-        prompt.authenticate(info)
+    private fun tampilkanCatatan(teks: String?) {
+        binding.tvNote.text = teks.orEmpty()
+        binding.tvNote.visibility = if (teks == null) View.GONE else View.VISIBLE
     }
 
-    // Menampilkan pesan ketika biometrik tidak tersedia
-    private fun showBiometricMessage(message: String) {
-
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Biometrik tidak dapat digunakan")
-            .setMessage(message)
-            .setPositiveButton("Mengerti", null)
-            .show()
-    }
-
-    // Navigasi menuju halaman utama
-    private fun openMainActivity() {
-
-        val intent = Intent(
-            this,
-            MainActivity::class.java
-        )
-
-        intent.putExtra(
-            MainActivity.EXTRA_AUTHENTICATED,
-            true
-        )
-
-        startActivity(intent)
-        finish()
+    private fun bukaBeranda() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finishAffinity()
     }
 }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:layout_width="24dp"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivTitik"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/bg_step_done"
+            android:contentDescription="Langkah" />
+
+        <View
+            android:id="@+id/garis"
+            android:layout_width="2dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_line_done" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="18dp">
+
+        <TextView
+            android:id="@+id/tvJudul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pesanan Masuk"
+            android:textAppearance="@style/TextApp.Label"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tvWaktu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="12 Sep 2026 • 10:30"
+            android:textAppearance="@style/TextApp.Caption" />
+
+        <TextView
+            android:id="@+id/tvCatatan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Pesanan berhasil dibuat"
+            android:textAppearance="@style/TextApp.Muted" />
+    </LinearLayout>
+
+</LinearLayout>
