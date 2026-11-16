@@ -56,7 +56,6 @@
 
         <activity android:name=".screen.DetailLayananActivity" android:exported="false" />
         <activity android:name=".screen.FormPemesananActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".screen.KonfirmasiPesananActivity" android:exported="false" />
         <activity android:name=".screen.PesananSuksesActivity" android:exported="false" />
         <activity android:name=".screen.DetailPesananActivity" android:exported="false" />
         <activity android:name=".screen.NotifikasiActivity" android:exported="false" />

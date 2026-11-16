@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Form Pemesanan 3 langkah (Detail Pesanan -> Upload Desain -> Konfirmasi),
+  mengikuti alur & tampilan versi Compose. Hanya satu halaman tampil pada satu waktu;
+  indikator langkah di atas dan tombol bawah diperbarui dari FormPemesananActivity.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,7 +19,1029 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="@drawable/ic_back"
-        app:title="Detail Pemesanan" />
+        app:title="Form Pemesanan" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/border" />
+
+    <!-- ================================================= indikator langkah -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="30dp"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/garis1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_line_done" />
+
+            <View
+                android:id="@+id/garis2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_line_idle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/step1Circle"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/bg_step_done"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/step1Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Detail Pesanan"
+                    android:textColor="@color/navy800"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/step2Circle"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/bg_step_idle"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@color/muted"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/step2Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Upload Desain"
+                    android:textColor="@color/muted"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/step3Circle"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/bg_step_idle"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="@color/muted"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/step3Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Konfirmasi"
+                    android:textColor="@color/muted"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/border" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- ======================================= langkah 1: detail pesanan -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollDetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="24dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.App.Card.Tight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:id="@+id/ivLayanan"
+                            android:layout_width="74dp"
+                            android:layout_height="74dp"
+                            android:contentDescription="Layanan"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/produk_banner" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvLayanan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Banner"
+                                android:textAppearance="@style/TextApp.H3" />
+
+                            <TextView
+                                android:id="@+id/tvHargaSatuan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="Rp 20.000 / m²"
+                                android:textColor="@color/orange"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ukuran (lebar x tinggi)"
+                        android:textAppearance="@style/TextApp.Title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jumlah"
+                        android:textAppearance="@style/TextApp.Title" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/etLebar"
+                        android:layout_width="0dp"
+                        android:layout_height="52dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_input"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:gravity="center"
+                        android:hint="0"
+                        android:importantForAutofill="no"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:textColor="@color/ink"
+                        android:textColorHint="@color/muted"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="7dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="x"
+                        android:textColor="@color/navy800"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/etTinggi"
+                        android:layout_width="0dp"
+                        android:layout_height="52dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_input"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:gravity="center"
+                        android:hint="0"
+                        android:importantForAutofill="no"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:textColor="@color/ink"
+                        android:textColorHint="@color/muted"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="2dp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="m"
+                        android:textColor="@color/body"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/btnMinus"
+                        android:layout_width="38dp"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_input"
+                        android:gravity="center"
+                        android:text="−"
+                        android:textColor="@color/navy800"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/tvJumlah"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginHorizontal="4dp"
+                        android:background="@drawable/bg_input"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textAppearance="@style/TextApp.H3" />
+
+                    <TextView
+                        android:id="@+id/btnPlus"
+                        android:layout_width="38dp"
+                        android:layout_height="42dp"
+                        android:background="@drawable/bg_input"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textColor="@color/navy800"
+                        android:textSize="17sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bahan"
+                            android:textAppearance="@style/TextApp.Title" />
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="8dp">
+
+                            <Spinner
+                                android:id="@+id/spBahan"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/bg_input"
+                                android:paddingStart="12dp"
+                                android:paddingEnd="32dp" />
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_gravity="end|center_vertical"
+                                android:layout_marginEnd="12dp"
+                                android:contentDescription="Pilih bahan"
+                                android:src="@drawable/ic_chevron_down"
+                                app:tint="@color/muted" />
+                        </FrameLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Finishing"
+                            android:textAppearance="@style/TextApp.Title" />
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="8dp">
+
+                            <Spinner
+                                android:id="@+id/spFinishing"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/bg_input"
+                                android:paddingStart="12dp"
+                                android:paddingEnd="32dp" />
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_gravity="end|center_vertical"
+                                android:layout_marginEnd="12dp"
+                                android:contentDescription="Pilih finishing"
+                                android:src="@drawable/ic_chevron_down"
+                                app:tint="@color/muted" />
+                        </FrameLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="Catatan Desain (opsional)"
+                    android:textAppearance="@style/TextApp.Title" />
+
+                <EditText
+                    android:id="@+id/etCatatan"
+                    android:layout_width="match_parent"
+                    android:layout_height="96dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_input"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="top|start"
+                    android:hint="Contoh: warna, teks, dll."
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine"
+                    android:padding="12dp"
+                    android:textColor="@color/ink"
+                    android:textColorHint="@color/muted"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:background="@drawable/bg_note_blue"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rincian perhitungan"
+                        android:textAppearance="@style/TextApp.Label" />
+
+                    <TextView
+                        android:id="@+id/tvRincian"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Rp 20.000/m² × 0 m × 0 m × 1 pcs"
+                        android:textAppearance="@style/TextApp.Caption" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- ======================================== langkah 2: upload desain -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollUpload"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="24dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Unggah File Desain"
+                    android:textColor="@color/navy800"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:lineSpacingExtra="3dp"
+                    android:text="Format PDF, JPG, atau PNG. Ukuran maksimal 10 MB per file. Boleh lebih dari satu file."
+                    android:textAppearance="@style/TextApp.Caption" />
+
+                <LinearLayout
+                    android:id="@+id/boxUpload"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_upload_box"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <FrameLayout
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:background="@drawable/bg_tile_blue">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="Unggah"
+                            android:src="@drawable/ic_upload"
+                            app:tint="@color/blue" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Ketuk untuk memilih file"
+                        android:textAppearance="@style/TextApp.H3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="PDF, JPG, PNG • maks 10 MB"
+                        android:textAppearance="@style/TextApp.Caption" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/cardFile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_input"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <FrameLayout
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="@drawable/bg_tile_red">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="File desain"
+                            android:src="@drawable/ic_receipt"
+                            app:tint="@color/red" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvNamaFile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="middle"
+                            android:maxLines="1"
+                            android:text="desain_banner.pdf"
+                            android:textAppearance="@style/TextApp.Label" />
+
+                        <TextView
+                            android:id="@+id/tvUkuranFile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="2,4 MB"
+                            android:textAppearance="@style/TextApp.Caption" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="Terunggah"
+                        android:src="@drawable/ic_check"
+                        app:tint="@color/green" />
+
+                    <ImageView
+                        android:id="@+id/ivHapusFile"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_marginStart="4dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:contentDescription="Hapus file"
+                        android:focusable="true"
+                        android:padding="7dp"
+                        android:src="@drawable/ic_trash"
+                        app:tint="@color/muted" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_note_yellow"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tips desain"
+                        android:textAppearance="@style/TextApp.Label" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:lineSpacingExtra="2dp"
+                        android:text="• Gunakan resolusi minimal 150 dpi agar hasil cetak tajam."
+                        android:textAppearance="@style/TextApp.Caption" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:lineSpacingExtra="2dp"
+                        android:text="• Sertakan area aman 1 cm dari tepi untuk banner dan spanduk."
+                        android:textAppearance="@style/TextApp.Caption" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:lineSpacingExtra="2dp"
+                        android:text="• Belum punya desain? Tim kami bisa bantu, biaya desain Rp 0."
+                        android:textAppearance="@style/TextApp.Caption" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:lineSpacingExtra="3dp"
+                    android:text="Belum punya file desain sekarang? Anda bisa melanjutkan tanpa file, lalu kirim desain lewat WhatsApp atau saat ke toko."
+                    android:textAppearance="@style/TextApp.Caption" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- ============================================ langkah 3: konfirmasi -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollKonfirmasi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Informasi Layanan"
+                    android:textAppearance="@style/TextApp.Title" />
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.App.Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:id="@+id/ivKonfirmasiLayanan"
+                            android:layout_width="86dp"
+                            android:layout_height="86dp"
+                            android:contentDescription="Layanan"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/produk_banner" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvKonfirmasiLayanan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Banner"
+                                android:textAppearance="@style/TextApp.H3" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="78dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Ukuran"
+                                    android:textAppearance="@style/TextApp.Caption" />
+
+                                <TextView
+                                    android:id="@+id/tvUkuranInfo"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="2 x 1 m"
+                                    android:textAppearance="@style/TextApp.Label" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="78dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Jumlah"
+                                    android:textAppearance="@style/TextApp.Caption" />
+
+                                <TextView
+                                    android:id="@+id/tvJumlahInfo"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="1 pcs"
+                                    android:textAppearance="@style/TextApp.Label" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="78dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Bahan"
+                                    android:textAppearance="@style/TextApp.Caption" />
+
+                                <TextView
+                                    android:id="@+id/tvBahanInfo"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:maxLines="2"
+                                    android:text="Flexi 440 gr"
+                                    android:textAppearance="@style/TextApp.Label" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="78dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Finishing"
+                                    android:textAppearance="@style/TextApp.Caption" />
+
+                                <TextView
+                                    android:id="@+id/tvFinishingInfo"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:maxLines="2"
+                                    android:text="Mata Ayam"
+                                    android:textAppearance="@style/TextApp.Label" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="78dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Estimasi"
+                                    android:textAppearance="@style/TextApp.Caption" />
+
+                                <TextView
+                                    android:id="@+id/tvEstimasiInfo"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="1 - 2 hari"
+                                    android:textAppearance="@style/TextApp.Label" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="File Desain"
+                    android:textAppearance="@style/TextApp.Title" />
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.App.Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="12dp">
+
+                        <FrameLayout
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/bg_tile_red">
+
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="File desain"
+                                android:src="@drawable/ic_receipt"
+                                app:tint="@color/red" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvFileNama"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="middle"
+                                android:maxLines="1"
+                                android:text="Belum ada file desain"
+                                android:textAppearance="@style/TextApp.Label" />
+
+                            <TextView
+                                android:id="@+id/tvFileInfo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Kirim desain menyusul"
+                                android:textAppearance="@style/TextApp.Caption" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:contentDescription="Lihat file"
+                            android:src="@drawable/ic_eye"
+                            app:tint="@color/primary" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="Catatan"
+                    android:textAppearance="@style/TextApp.Title" />
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.App.Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:id="@+id/tvCatatanFinal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="3dp"
+                        android:padding="14dp"
+                        android:text="Tidak ada catatan tambahan."
+                        android:textAppearance="@style/TextApp.Body" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="Ringkasan Pembayaran"
+                    android:textAppearance="@style/TextApp.Title" />
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.App.Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="14dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Subtotal"
+                                android:textAppearance="@style/TextApp.Body" />
+
+                            <TextView
+                                android:id="@+id/tvSubtotal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rp 40.000"
+                                android:textAppearance="@style/TextApp.BodyStrong" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Biaya Desain"
+                                android:textAppearance="@style/TextApp.Body" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rp 0"
+                                android:textAppearance="@style/TextApp.BodyStrong" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/border" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/bg_total_box"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="Total"
+                                android:textColor="@color/navy800"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/tvTotalFinal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="Rp 40.000"
+                                android:textColor="@color/orange"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbSetuju"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="Saya sudah memeriksa kembali pesanan"
+                    android:textColor="@color/body"
+                    android:textSize="12sp"
+                    app:useMaterialThemeColors="true" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </FrameLayout>
 
     <View
         android:layout_width="match_parent"
@@ -27,493 +1054,62 @@
         android:background="@color/surface"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="24dp"
+        android:paddingStart="20dp"
         android:paddingTop="12dp"
-        android:paddingEnd="24dp"
+        android:paddingEnd="20dp"
         android:paddingBottom="12dp">
 
         <LinearLayout
+            android:id="@+id/rowHarga"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_step_done"
-                android:gravity="center"
-                android:text="1"
-                android:textColor="@color/white"
-                android:textSize="13sp" />
-
-            <TextView
+                android:id="@+id/tvBottomLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Ukuran"
+                android:text="Estimasi Harga"
                 android:textAppearance="@style/TextApp.Caption" />
+
+            <TextView
+                android:id="@+id/tvBottomValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Rp 0"
+                android:textColor="@color/orange"
+                android:textSize="20sp" />
         </LinearLayout>
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="3dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_line_idle" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_step_idle"
-                android:gravity="center"
-                android:text="2"
-                android:textColor="@color/muted"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Desain"
-                android:textAppearance="@style/TextApp.Caption" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="3dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_line_idle" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_step_idle"
-                android:gravity="center"
-                android:text="3"
-                android:textColor="@color/muted"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Konfirmasi"
-                android:textAppearance="@style/TextApp.Caption" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
-
-            <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.App.Card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="14dp">
-
-                    <ImageView
-                        android:id="@+id/ivLayanan"
-                        android:layout_width="54dp"
-                        android:layout_height="54dp"
-                        android:contentDescription="Layanan"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/produk_banner" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tvLayanan"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Banner"
-                            android:textAppearance="@style/TextApp.H3" />
-
-                        <TextView
-                            android:id="@+id/tvHargaSatuan"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Rp 20.000 / m²"
-                            android:textAppearance="@style/TextApp.PriceSmall" />
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:text="Ukuran"
-                android:textAppearance="@style/TextApp.Title" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilUkuran"
-                style="@style/Widget.App.TextInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="Contoh: 2 x 1 m">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etUkuran"
-                    style="@style/Widget.App.EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:maxLines="1" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Jumlah"
-                android:textAppearance="@style/TextApp.Title" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/btnMinus"
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:background="@drawable/bg_search"
-                    android:gravity="center"
-                    android:text="−"
-                    android:textColor="@color/ink"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/tvJumlah"
-                    android:layout_width="64dp"
-                    android:layout_height="46dp"
-                    android:layout_marginHorizontal="8dp"
-                    android:background="@drawable/bg_search"
-                    android:gravity="center"
-                    android:text="1"
-                    android:textAppearance="@style/TextApp.H3" />
-
-                <TextView
-                    android:id="@+id/btnPlus"
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:background="@drawable/bg_search"
-                    android:gravity="center"
-                    android:text="+"
-                    android:textColor="@color/ink"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilBahan"
-                style="@style/Widget.App.TextInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="Bahan">
-
-                <AutoCompleteTextView
-                    android:id="@+id/etBahan"
-                    style="@style/Widget.App.EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:completionThreshold="1"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilFinishing"
-                style="@style/Widget.App.TextInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:hint="Finishing">
-
-                <AutoCompleteTextView
-                    android:id="@+id/etFinishing"
-                    style="@style/Widget.App.EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:completionThreshold="1"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilCatatan"
-                style="@style/Widget.App.TextInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:hint="Catatan untuk produksi">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etCatatan"
-                    style="@style/Widget.App.EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="top|start"
-                    android:inputType="textMultiLine"
-                    android:minLines="3" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Desain"
-                android:textAppearance="@style/TextApp.Title" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardUpload"
-                style="@style/Widget.App.Card.Tight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_tile_blue"
-                        android:contentDescription="Unggah"
-                        android:padding="10dp"
-                        android:src="@drawable/ic_upload"
-                        app:tint="@color/blue" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tvUploadJudul"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Unggah file desain"
-                            android:textAppearance="@style/TextApp.Label" />
-
-                        <TextView
-                            android:id="@+id/tvUploadInfo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="PDF, JPG atau PNG maksimal 10 MB"
-                            android:textAppearance="@style/TextApp.Caption" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/btnPilihFile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_pill_blue"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:paddingStart="12dp"
-                        android:paddingTop="6dp"
-                        android:paddingEnd="12dp"
-                        android:paddingBottom="6dp"
-                        android:text="Pilih"
-                        android:textColor="@color/blue"
-                        android:textSize="11sp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.App.Card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Metode pengambilan"
-                        android:textAppearance="@style/TextApp.Title" />
-
-                    <RadioGroup
-                        android:id="@+id/rgMetode"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/rbAmbil"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:checked="true"
-                            android:text="Ambil di toko"
-                            android:textColor="@color/body"
-                            android:textSize="12sp" />
-
-                        <RadioButton
-                            android:id="@+id/rbKirim"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Dikirim"
-                            android:textColor="@color/body"
-                            android:textSize="12sp" />
-                    </RadioGroup>
-
-                    <LinearLayout
-                        android:id="@+id/rowTanggal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/bg_search"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="12dp">
-
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:contentDescription="Tanggal"
-                            android:src="@drawable/ic_calendar"
-                            app:tint="@color/muted" />
-
-                        <TextView
-                            android:id="@+id/tvTanggal"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_weight="1"
-                            android:text="Pilih tanggal pengambilan"
-                            android:textAppearance="@style/TextApp.Label" />
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:contentDescription="Pilih"
-                            android:src="@drawable/ic_chevron_right"
-                            app:tint="@color/muted" />
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.App.Card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Harga"
-                            android:textAppearance="@style/TextApp.Muted" />
-
-                        <TextView
-                            android:id="@+id/tvHargaHitung"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Rp 40.000"
-                            android:textAppearance="@style/TextApp.BodyStrong" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Total pembayaran"
-                            android:textAppearance="@style/TextApp.Label" />
-
-                        <TextView
-                            android:id="@+id/tvTotal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Rp 40.000"
-                            android:textAppearance="@style/TextApp.Price" />
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/surface"
-        android:orientation="vertical"
-        android:padding="14dp">
-
-        <androidx.appcompat.widget.AppCompatButton
+        <FrameLayout
             android:id="@+id/btnLanjut"
-            style="@style/Widget.App.Button.Primary"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:text="Lanjut Konfirmasi" />
+            android:layout_width="170dp"
+            android:layout_height="54dp"
+            android:background="@drawable/bg_btn_disabled"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:id="@+id/tvBtnLanjut"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/poppins_semibold"
+                android:gravity="center"
+                android:text="Lanjutkan"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="14dp"
+                android:contentDescription="Lanjut"
+                android:src="@drawable/ic_forward"
+                app:tint="@color/white" />
+        </FrameLayout>
     </LinearLayout>
 
 </LinearLayout>

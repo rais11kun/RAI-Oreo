@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Layar Detail Layanan — disamakan dengan desain versi Compose:
+  galeri ViewPager2 + indikator titik, nama & kategori, rating, harga mulai,
+  kotak estimasi/bahan, contoh hasil cetak, kartu spesifikasi, dan bar bawah.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
+    android:background="@color/surface"
     android:orientation="vertical"
     tools:ignore="HardcodedText">
 
@@ -26,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@color/bg"
         android:fillViewport="true">
 
         <LinearLayout
@@ -35,15 +41,12 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="210dp">
+                android:layout_height="230dp">
 
-                <ImageView
-                    android:id="@+id/ivGambar"
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/pagerGaleri"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="Foto layanan"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/produk_banner" />
+                    android:layout_height="match_parent" />
 
                 <TextView
                     android:id="@+id/tvPopuler"
@@ -51,22 +54,35 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|end"
                     android:layout_margin="14dp"
-                    android:background="@drawable/bg_pill_solid_orange"
+                    android:background="@drawable/bg_pill_blue"
                     android:fontFamily="@font/poppins_semibold"
-                    android:paddingStart="12dp"
-                    android:paddingTop="5dp"
-                    android:paddingEnd="12dp"
-                    android:paddingBottom="5dp"
+                    android:paddingStart="14dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="6dp"
                     android:text="Populer"
-                    android:textColor="@color/white"
-                    android:textSize="10sp" />
+                    android:textColor="@color/blue"
+                    android:textSize="11sp" />
             </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/indikatorGaleri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="4dp"
+                android:orientation="horizontal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/surface"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:paddingStart="20dp"
+                android:paddingTop="14dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="24dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -79,8 +95,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/poppins_bold"
+                        android:includeFontPadding="false"
                         android:text="Banner"
-                        android:textAppearance="@style/TextApp.H1" />
+                        android:textColor="@color/navy800"
+                        android:textSize="26sp" />
 
                     <TextView
                         android:id="@+id/tvKategori"
@@ -105,26 +124,27 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:contentDescription="Rating"
                         android:src="@drawable/ic_star"
-                        app:tint="@color/yellow" />
+                        app:tint="@color/orange" />
 
                     <TextView
                         android:id="@+id/tvRating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
+                        android:fontFamily="@font/poppins_semibold"
                         android:text="4.8"
-                        android:textAppearance="@style/TextApp.Label"
+                        android:textColor="@color/ink"
                         android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tvJumlahPesanan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
+                        android:layout_marginStart="4dp"
                         android:text="(120+ pesanan)"
                         android:textAppearance="@style/TextApp.Caption" />
                 </LinearLayout>
@@ -133,7 +153,8 @@
                     android:id="@+id/tvDeskripsi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="4dp"
                     android:text="Media promosi yang cocok untuk kebutuhan indoor dan outdoor."
                     android:textAppearance="@style/TextApp.Body" />
 
@@ -143,63 +164,84 @@
                     android:layout_marginTop="16dp"
                     android:background="@color/border" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="Harga Mulai"
+                    android:textAppearance="@style/TextApp.Muted" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Harga Mulai"
-                        android:textAppearance="@style/TextApp.Muted" />
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/tvHarga"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="Rp 20.000 / m²"
-                        android:textAppearance="@style/TextApp.Price" />
+                        android:fontFamily="@font/poppins_bold"
+                        android:includeFontPadding="false"
+                        android:text="Rp 20.000"
+                        android:textColor="@color/orange"
+                        android:textSize="26sp" />
+
+                    <TextView
+                        android:id="@+id/tvSatuan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginBottom="3dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="/ m²"
+                        android:textColor="@color/navy800"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="14dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_spec_tile"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:padding="12dp">
 
                         <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
                             android:contentDescription="Estimasi"
                             android:src="@drawable/ic_clock"
-                            app:tint="@color/muted" />
+                            app:tint="@color/navy800" />
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Estimasi"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="Estimasi Pengerjaan"
                                 android:textAppearance="@style/TextApp.Caption" />
 
                             <TextView
                                 android:id="@+id/tvEstimasi"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:maxLines="2"
                                 android:text="1 - 2 hari"
                                 android:textAppearance="@style/TextApp.Label" />
                         </LinearLayout>
@@ -208,34 +250,41 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_spec_tile"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:padding="12dp">
 
                         <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
                             android:contentDescription="Bahan"
                             android:src="@drawable/ic_box"
-                            app:tint="@color/muted" />
+                            app:tint="@color/navy800" />
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Bahan"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="Bahan Tersedia"
                                 android:textAppearance="@style/TextApp.Caption" />
 
                             <TextView
                                 android:id="@+id/tvBahanUtama"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Flexi 440 gr"
+                                android:maxLines="2"
+                                android:text="Flexi 440 gr, Vinyl"
                                 android:textAppearance="@style/TextApp.Label" />
                         </LinearLayout>
                     </LinearLayout>
@@ -259,47 +308,65 @@
                         android:id="@+id/tvLihatSemua"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_chevron_right"
+                        android:drawablePadding="3dp"
+                        android:drawableTint="@color/blue"
+                        android:fontFamily="@font/poppins_semibold"
                         android:text="Lihat Semua"
-                        android:textAppearance="@style/TextApp.Link" />
+                        android:textColor="@color/blue"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvContoh"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:text="Bahan Tersedia"
-                    android:textAppearance="@style/TextApp.Title" />
-
-                <TextView
-                    android:id="@+id/tvBahanList"
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.App.Card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Flexi 440 gr · Vinyl · Backlite"
-                    android:textAppearance="@style/TextApp.Body" />
+                    android:layout_marginTop="18dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Spesifikasi"
+                            android:textAppearance="@style/TextApp.H3" />
+
+                        <TextView
+                            android:id="@+id/tvSpesifikasi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingExtra="4dp"
+                            android:text="Bahan: Flexi 440 gr, Vinyl, Backlite"
+                            android:textAppearance="@style/TextApp.Body" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:text="Finishing"
-                    android:textAppearance="@style/TextApp.Title" />
+                    android:layout_marginTop="16dp"
+                    android:text="Finishing tersedia"
+                    android:textAppearance="@style/TextApp.Muted" />
 
                 <TextView
                     android:id="@+id/tvFinishingList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_below="@id/tvBahanList"
+                    android:layout_marginTop="2dp"
                     android:text="Mata Ayam · Tanpa Finishing · Jahit Keliling"
                     android:textAppearance="@style/TextApp.Body" />
             </LinearLayout>
@@ -317,26 +384,57 @@
         android:background="@color/surface"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="14dp">
+        android:paddingStart="20dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="12dp">
 
-        <ImageView
+        <FrameLayout
             android:id="@+id/ivFavorit"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
             android:background="@drawable/bg_search"
-            android:contentDescription="Simpan ke favorit"
-            android:padding="14dp"
-            android:src="@drawable/ic_heart_outline"
-            app:tint="@color/primary" />
+            android:clickable="true"
+            android:focusable="true">
 
-        <androidx.appcompat.widget.AppCompatButton
+            <ImageView
+                android:id="@+id/iconFavorit"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:contentDescription="Simpan ke favorit"
+                android:src="@drawable/ic_heart_outline"
+                app:tint="@color/muted" />
+        </FrameLayout>
+
+        <FrameLayout
             android:id="@+id/btnPesan"
-            style="@style/Widget.App.Button.Primary"
             android:layout_width="0dp"
-            android:layout_height="52dp"
+            android:layout_height="54dp"
             android:layout_marginStart="12dp"
             android:layout_weight="1"
-            android:text="Pesan Sekarang" />
+            android:background="@drawable/bg_btn_primary"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/poppins_semibold"
+                android:gravity="center"
+                android:text="Pesan Sekarang"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="18dp"
+                android:contentDescription="Pesan"
+                android:src="@drawable/ic_forward"
+                app:tint="@color/white" />
+        </FrameLayout>
     </LinearLayout>
 
 </LinearLayout>
