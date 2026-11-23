@@ -1,0 +1,5 @@
+# Tambahkan dua baris ini ke local.properties milik proyek.
+# Pertahankan sdk.dir yang sudah ada.
+SUPABASE_URL=https://PROJECT_REF.supabase.co
+SUPABASE_ANON_KEY=YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY
+# Jangan commit local.properties. Jangan gunakan service_role key.

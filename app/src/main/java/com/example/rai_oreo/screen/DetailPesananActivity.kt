@@ -12,11 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.example.rai_oreo.R
 import com.example.rai_oreo.adapter.TimelineAdapter
+import androidx.lifecycle.lifecycleScope
 import com.example.rai_oreo.data.OrderStatus
 import com.example.rai_oreo.data.SimperRepository
+import com.example.rai_oreo.data.remote.RemoteMapper
+import com.example.rai_oreo.data.remote.RemoteRepository
 import com.example.rai_oreo.data.toRupiah
 import com.example.rai_oreo.databinding.ActivityDetailPesananBinding
 import com.example.rai_oreo.util.Badge
+import kotlinx.coroutines.launch
 
 class DetailPesananActivity : AppCompatActivity() {
 
@@ -101,6 +105,13 @@ class DetailPesananActivity : AppCompatActivity() {
                 .setNegativeButton("Tidak", null)
                 .setPositiveButton("Batalkan") { _, _ ->
                     SimperRepository.updateStatus(order.nomor, OrderStatus.DIBATALKAN)
+                    // Modul 12: sinkronkan perubahan status ke tabel pesanan.
+                    val idRemote = RemoteMapper.idPesananRemote(order.nomor)
+                    if (RemoteRepository.siap() && idRemote != null) {
+                        lifecycleScope.launch {
+                            RemoteRepository.ubahStatusPesanan(idRemote, OrderStatus.DIBATALKAN.name)
+                        }
+                    }
                     tampilkan()
                 }
                 .show()

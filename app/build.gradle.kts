@@ -1,7 +1,18 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
+}
+
+// Modul 12: baca URL dan anon key dari local.properties.
+// Berkas local.properties tidak disertakan dalam ZIP dan tidak boleh di-commit.
+val supabaseLocalProps = Properties().apply {
+    val localPropsFile = rootProject.file("local.properties")
+    if (localPropsFile.exists()) {
+        localPropsFile.inputStream().use { load(it) }
+    }
 }
 
 android {
@@ -14,6 +25,17 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0.0"
+
+        buildConfigField(
+            "String",
+            "SUPABASE_URL",
+            "\"${supabaseLocalProps.getProperty("SUPABASE_URL").orEmpty()}\""
+        )
+        buildConfigField(
+            "String",
+            "SUPABASE_ANON_KEY",
+            "\"${supabaseLocalProps.getProperty("SUPABASE_ANON_KEY").orEmpty()}\""
+        )
     }
 
     buildTypes {
@@ -38,6 +60,7 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
+        buildConfig = true
     }
 
     packaging {
@@ -51,6 +74,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.8.2")
     implementation("androidx.activity:activity-compose:1.9.2")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -66,6 +90,11 @@ dependencies {
     implementation("androidx.biometric:biometric:1.1.0")
     implementation("com.google.zxing:core:3.5.3")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+
+    // Modul 12: REST API / Retrofit / Supabase
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     debugImplementation("androidx.compose.ui:ui-tooling")
 }

@@ -11,6 +11,7 @@ class LayananAdapter(
     private val daftar: List<Service>,
     private val onToggle: (Service, Boolean) -> Unit,
     private val onClick: (Service) -> Unit,
+    private val onLongClick: ((Service) -> Unit)? = null,
 ) : RecyclerView.Adapter<LayananAdapter.VH>() {
 
     inner class VH(val binding: ItemLayananBinding) : RecyclerView.ViewHolder(binding.root)
@@ -30,6 +31,11 @@ class LayananAdapter(
         b.swAktif.isChecked = service.aktif
         b.swAktif.setOnCheckedChangeListener { _, checked -> onToggle(service, checked) }
         b.root.setOnClickListener { onClick(service) }
+        // Tekan lama = hapus layanan (CRUD Delete, tanpa mengubah layout).
+        b.root.setOnLongClickListener {
+            onLongClick?.invoke(service)
+            onLongClick != null
+        }
     }
 
     override fun getItemCount(): Int = daftar.size

@@ -11,10 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rai_oreo.R
 import com.example.rai_oreo.adapter.TimelineAdapter
+import androidx.lifecycle.lifecycleScope
 import com.example.rai_oreo.data.OrderStatus
 import com.example.rai_oreo.data.SimperRepository
+import com.example.rai_oreo.data.remote.RemoteMapper
+import com.example.rai_oreo.data.remote.RemoteRepository
 import com.example.rai_oreo.databinding.ActivityDetailAntrianBinding
 import com.example.rai_oreo.util.Badge
+import kotlinx.coroutines.launch
 
 class DetailAntrianActivity : AppCompatActivity() {
 
@@ -46,6 +50,13 @@ class DetailAntrianActivity : AppCompatActivity() {
 
         binding.btnUpdate.setOnClickListener {
             SimperRepository.updateStatus(nomor, statusPilihan)
+            // Modul 12: update status pesanan juga dikirim ke Supabase.
+            val idRemote = RemoteMapper.idPesananRemote(nomor)
+            if (RemoteRepository.siap() && idRemote != null) {
+                lifecycleScope.launch {
+                    RemoteRepository.ubahStatusPesanan(idRemote, statusPilihan.name)
+                }
+            }
             Toast.makeText(this, "Status diubah menjadi ${statusPilihan.label}", Toast.LENGTH_SHORT).show()
             tampilkan()
         }

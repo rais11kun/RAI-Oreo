@@ -1,6 +1,3 @@
-/**
- * Penerapan praktikum: Modul 10 - ListView custom adapter dengan ViewHolder dan ViewBinding.
- */
 package com.example.rai_oreo.adapter
 
 import android.view.LayoutInflater
@@ -13,11 +10,13 @@ import com.example.rai_oreo.databinding.ItemPesananBinding
 import com.example.rai_oreo.util.Badge
 
 /**
- * ListView custom adapter (pola ViewHolder + ViewBinding) untuk daftar pesanan.
+ * Penerapan praktikum: Modul 10 - ListView custom adapter dengan ViewHolder dan ViewBinding.
+ * Ditambah dukungan tekan-lama untuk menghapus pesanan (Modul 12 - CRUD Delete).
  */
 class PesananAdapter(
     private var daftar: List<Order>,
     private val onClick: (Order) -> Unit,
+    private val onLongClick: ((Order) -> Unit)? = null,
 ) : BaseAdapter() {
 
     private class VH(val binding: ItemPesananBinding)
@@ -58,6 +57,10 @@ class PesananAdapter(
         Badge.status(b.tvStatus, order.status)
 
         b.root.setOnClickListener { onClick(order) }
+        b.root.setOnLongClickListener {
+            onLongClick?.invoke(order)
+            onLongClick != null
+        }
         return view
     }
 }

@@ -18,13 +18,19 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.example.rai_oreo.R
 import com.example.rai_oreo.data.OrderDraft
+import com.example.rai_oreo.data.Prefs
 import com.example.rai_oreo.data.Service
 import com.example.rai_oreo.data.SimperRepository
+import com.example.rai_oreo.data.remote.PesananDto
+import com.example.rai_oreo.data.remote.RemoteMapper
+import com.example.rai_oreo.data.remote.RemoteRepository
 import com.example.rai_oreo.data.toRupiah
 import com.example.rai_oreo.databinding.ActivityFormPemesananBinding
+import kotlinx.coroutines.launch
 
 class FormPemesananActivity : AppCompatActivity() {
 
@@ -306,6 +312,52 @@ class FormPemesananActivity : AppCompatActivity() {
     }
 
     private fun buatPesanan() {
+        // Modul 12: bila Supabase aktif, pesanan dibuat di tabel pesanan lebih dulu
+        // (nomor #ORD diisi trigger), lalu dicatat di cache lokal agar alur tetap sama.
+        if (!RemoteRepository.siap()) {
+            simpanLokal(null)
+            return
+        }
+
+        binding.btnLanjut.isEnabled = false
+        lifecycleScope.launch {
+            val email = Prefs.email(this@FormPemesananActivity)
+            val idPengguna = runCatching {
+                RemoteRepository.cariPengguna(email).getOrNull()?.id
+            }.getOrNull()
+
+            val dto = PesananDto(
+                userId = idPengguna,
+                layananId = RemoteMapper.idLayananRemote(service.id),
+                ukuran = OrderDraft.ukuran,
+                jumlah = OrderDraft.jumlah,
+                bahan = OrderDraft.bahan,
+                finishing = OrderDraft.finishing,
+                catatan = OrderDraft.catatan,
+                desainNama = OrderDraft.desainNama.ifBlank { "belum ada file" },
+                desainUkuran = OrderDraft.desainUkuran.ifBlank { "-" },
+                total = OrderDraft.total,
+            )
+
+            RemoteRepository.tambahPesanan(dto)
+                .onSuccess { hasil ->
+                    RemoteMapper.catatPesanan(hasil.nomor, hasil.id)
+                    simpanLokal(hasil.nomor)
+                }
+                .onFailure { error ->
+                    binding.btnLanjut.isEnabled = true
+                    Toast.makeText(
+                        this@FormPemesananActivity,
+                        "Gagal menyimpan ke server: ${error.message}",
+                        Toast.LENGTH_LONG,
+                    ).show()
+                    simpanLokal(null)
+                }
+        }
+    }
+
+    /** Mencatat pesanan di cache lokal (dipakai seluruh layar) lalu ke layar sukses. */
+    private fun simpanLokal(nomorRemote: String?) {
         val order = SimperRepository.createOrder(
             service = service,
             ukuran = OrderDraft.ukuran,
@@ -316,6 +368,7 @@ class FormPemesananActivity : AppCompatActivity() {
             desainNama = OrderDraft.desainNama.ifBlank { "belum ada file" },
             desainUkuran = OrderDraft.desainUkuran.ifBlank { "-" },
             total = OrderDraft.total,
+            nomorOverride = nomorRemote,
         )
         Toast.makeText(this, "Pesanan ${order.nomor} dibuat", Toast.LENGTH_SHORT).show()
         startActivity(
