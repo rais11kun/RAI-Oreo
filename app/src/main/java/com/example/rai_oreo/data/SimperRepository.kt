@@ -104,9 +104,11 @@ object SimperRepository {
         desainNama: String,
         desainUkuran: String,
         total: Int,
+        nomorOverride: String? = null,
     ): Order {
         val next = 123 + orders.size
-        val nomor = "#ORD%05d".format(next)
+        // Modul 12: bila pesanan sudah dibuat di Supabase, pakai nomor dari server.
+        val nomor = nomorOverride ?: "#ORD%05d".format(next)
         val order = Order(
             nomor = nomor,
             serviceId = service.id,
@@ -224,6 +226,28 @@ object SimperRepository {
     }
 
     fun revenueOf(list: List<Order>): Int = list.filter { it.status == OrderStatus.SELESAI }.sumOf { it.total }
+
+    // -------------------------------------------------- sinkronisasi Supabase
+    // Modul 12: data REST dimasukkan ke cache lokal agar seluruh layar tetap
+    // memakai SimperRepository tanpa perlu diubah.
+
+    fun gantiLayanan(daftar: List<Service>) {
+        services.clear()
+        services.addAll(daftar)
+    }
+
+    fun gantiPesanan(daftar: List<Order>) {
+        orders.clear()
+        orders.addAll(daftar)
+    }
+
+    fun hapusPesanan(nomor: String) {
+        orders.removeAll { it.nomor == nomor }
+    }
+
+    fun hapusLayanan(id: Int) {
+        services.removeAll { it.id == id }
+    }
 }
 
 val demoUsers = listOf(

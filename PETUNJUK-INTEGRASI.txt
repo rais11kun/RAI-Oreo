@@ -1,0 +1,29 @@
+PETUNJUK INTEGRASI AMAN - SIMPER-NRA
+
+Isi ZIP ini adalah patch untuk proyek D:\Mobile yang sudah memakai namespace/package
+com.example.rai_oreo. Patch ini sudah disesuaikan dari ZIP SIMPER-NRA-Perubahan yang
+asalnya masih memakai package com.nra.simper.
+
+JANGAN ekstrak patch ini sebelum membuat branch Git baru dan memastikan git status bersih.
+
+1. Buka PowerShell di folder D:\Mobile.
+2. Pastikan `git status` menunjukkan working tree clean.
+3. Buat branch kerja baru:
+   git switch -c perbaikan-form-pesanan
+4. Ekstrak isi ZIP ini ke root proyek D:\Mobile, izinkan replace file yang sama.
+5. Hapus dua file lama berikut karena alur konfirmasi sekarang berada di langkah ketiga Form:
+   app/src/main/java/com/example/rai_oreo/screen/KonfirmasiPesananActivity.kt
+   app/src/main/res/layout/activity_konfirmasi_pesanan.xml
+6. Buka app/src/main/AndroidManifest.xml dan pastikan baris pendaftaran
+   .screen.KonfirmasiPesananActivity sudah tidak ada. Manifest dalam patch sudah menghapusnya.
+7. JANGAN salin app/build.gradle.kts dari ZIP SIMPER-NRA-Perubahan asli. File itu memakai
+   namespace com.nra.simper. Proyek sekarang tetap memakai com.example.rai_oreo.
+   Dependency androidx.viewpager2:viewpager2:1.1.0 sudah ada pada proyek sekarang.
+8. Sync Gradle, lalu jalankan Build > Make Project atau `:app:assembleDebug`.
+9. Uji alur: Detail Layanan > Pesan > Detail Pesanan > Upload Desain > Konfirmasi > Buat Pesanan.
+
+Patch tidak mengubah .git, local.properties, konfigurasi root Gradle, file data, repository,
+atau package proyek yang sekarang. ZIP ini tidak mengandung hasil build APK.
+
+Catatan: halaman Detail Layanan pada patch masih mengarahkan tombol "Lihat Semua" ke Bantuan.
+Itu masalah terpisah dan belum diperbaiki dalam patch Form Pesanan ini.

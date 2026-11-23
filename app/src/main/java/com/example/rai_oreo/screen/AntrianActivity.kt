@@ -76,12 +76,15 @@ class AntrianActivity : AppCompatActivity() {
         val aktif = semua.count { it.status.isActive }
 
         binding.tvRingkas.text = "$aktif pesanan aktif · ${semua.size} total pesanan"
-        binding.lvAntrian.adapter = PesananAdapter(data) { order ->
-            startActivity(
-                Intent(this, DetailAntrianActivity::class.java)
-                    .putExtra(DetailPesananActivity.EXTRA_NOMOR, order.nomor)
-            )
-        }
+        binding.lvAntrian.adapter = PesananAdapter(
+            daftar = data,
+            onClick = { order ->
+                startActivity(
+                    Intent(this, DetailAntrianActivity::class.java)
+                        .putExtra(DetailPesananActivity.EXTRA_NOMOR, order.nomor)
+                )
+            },
+        )
         binding.emptyAntrian.visibility = if (data.isEmpty()) View.VISIBLE else View.GONE
         binding.lvAntrian.visibility = if (data.isEmpty()) View.GONE else View.VISIBLE
     }
